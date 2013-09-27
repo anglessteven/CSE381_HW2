@@ -143,17 +143,18 @@ public class anglessw_hw2 {
 			}
 
 			for (int i=anchor; (i<vector.length); i++) {
-				int tmp = vector[i];
-				vector[i] = vector[anchor];
-				vector[anchor] = tmp;
+				swap(vector, i, anchor);
 				genPerm(vector, anchor+1);
-				vector[anchor] = vector[i];
-				vector[i] = tmp;
+				swap(vector, anchor, i);
 			}
 		}
 		
-		/**Calculates the scalar product of the input
-		 * and the thread's second vector
+		/**
+		 * Calculates the scalar product of the input
+		 * and the thread's second vector.
+		 * @param vector
+		 * 			The int array to calculate the scalar product against.
+		 * @return The computed scalar product.
 		 */
 		private int calcSum(int[] vector) {
 			int tmpSum = 0;
@@ -163,19 +164,32 @@ public class anglessw_hw2 {
 			return tmpSum;
 		}
 		
-		/**Run method that divides the array 
-		   appropriately and calculates a subset
-		   of the permutations.
+		/**
+		 * Convenience method for swapping two values of an array.
+		 * @param arr
+		 * 			The int array with values to swap.
+		 * @param idx1
+		 * 			The first index of the value to swap.
+		 * @param idx2
+		 * 			The second index of the value to swap.
+		 */
+		private void swap(int[] arr, int idx1, int idx2) {
+			int temp = arr[idx1];
+			arr[idx1] = arr[idx2];
+			arr[idx2] = temp;
+		}
+		
+		/**
+		 * Run method that divides the array 
+		 * appropriately and calculates a subset
+		 * of the permutations.
 		 */
 		public void run() {
 			int[] tmpOne = Arrays.copyOf(one, one.length);
 			for (int i=start; i<end; i++) {
-				int tmp = tmpOne[0];
-				tmpOne[0] = tmpOne[i];
-				tmpOne[i] = tmp;
+				swap(tmpOne, 0, i);
 				genPerm(tmpOne, 1);
-				tmpOne[i] = tmpOne[0];
-				tmpOne[0] = tmp;
+				swap(tmpOne, i, 0);
 			}
 		}
 	}
